@@ -14,15 +14,6 @@ interface FormatCardProps {
 export default function FormatCard({ conversionOption, id, selected, onSelect, advanced = false }: FormatCardProps) {
 	const [format, handler] = conversionOption;
 
-	const cleanName = advanced
-		? format.name
-		: format.name
-			.split("(").join(")").split(")")
-			.filter((_, i) => i % 2 === 0)
-			.filter(c => c !== "")
-			.join(" ")
-			.trim();
-
 	return (
 		<button
 			className={`format-card ${selected ? "active" : ""}`}
@@ -37,7 +28,7 @@ export default function FormatCard({ conversionOption, id, selected, onSelect, a
 				/>
 				<div className="format-card-text">
 					<span className="format-card-ext">.{format.extension.toUpperCase()}</span>
-					<span className="format-card-name">{cleanName}</span>
+					<span className="format-card-name">{format.name}</span>
 				</div>
 				<div className="format-card-check" aria-hidden="true">
 					<span className={`format-card-check-inner ${selected ? "is-on" : ""}`}>

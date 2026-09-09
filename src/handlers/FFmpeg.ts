@@ -288,6 +288,17 @@ class FFmpegHandler implements FormatHandler {
     // APNG as the same thing.
     this.supportedFormats.push(CommonFormats.PNG.builder("png").allowFrom());
 
+    // Encoding-specific formats
+    this.supportedFormats.push(CommonFormats.OGG.builder("ogg")
+      .named("Ogg Vorbis Audio")
+      .withFormat("ogg-vorbis")
+      .allowTo());
+
+    this.supportedFormats.push(CommonFormats.OGG.builder("ogg")
+      .named("Ogg Opus Audio")
+      .withFormat("ogg-opus")
+      .allowTo());
+
     this.#ffmpeg.terminate();
 
     this.ready = true;
@@ -358,6 +369,10 @@ class FFmpegHandler implements FormatHandler {
       command.push("-vf", "scale=352:288,setsar=1", "-target", "pal-vcd", "-pix_fmt", "rgb24");
     } else if (outputFormat.internal === "asf") {
       command.push("-b:v", "15M", "-b:a", "192k");
+    } else if (outputFormat.format === "ogg-vorbis") {
+      command.push("-c:a", "libvorbis");
+    } else if (outputFormat.format === "ogg-opus") {
+      command.push("-c:a", "libopus");
     }
     if (args) command.push(...args);
     command.push("output");

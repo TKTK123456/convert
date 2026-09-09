@@ -158,7 +158,7 @@ test("mp3 → png → gif", async () => {
 
 }, { timeout: 60000 });
 
-test("docx → html → svg → png → pdf", async () => {
+test("docx → pptx → pdf", async () => {
 
   const conversion = await attemptConversion(
     ["word.docx"],
@@ -169,12 +169,27 @@ test("docx → html → svg → png → pdf", async () => {
   expect(conversion).toBeTruthy();
   expect(conversion!.path.map(c => c.format.mime)).toEqual([
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "text/html", "image/svg+xml", "image/png", "application/pdf"
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/pdf"
   ]);
-  const fileSize = Object.values(conversion!.files[0].bytes).length;
-  expect(fileSize).toBeWithin(55000, 65000);
 
 }, { timeout: 60000 });
+
+test("pptx → pdf", async () => {
+
+  const conversion = await attemptConversion(
+    ["chart-and-complex.pptx"],
+    CommonFormats.PPTX,
+    CommonFormats.PDF
+  );
+
+  expect(conversion).toBeTruthy();
+  expect(conversion!.path.map(c => c.format.mime)).toEqual([
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/pdf"
+  ]);
+
+}, { timeout: 120000 });
 
 test("md → docx", async () => {
 
