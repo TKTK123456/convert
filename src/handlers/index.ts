@@ -79,6 +79,7 @@ import wasiRunnerHandler from "./wasiRunner.ts";
 import clangWasiHandler from "./clang-wasi.ts";
 import mcModpackHandler from "./mcModpack.ts";
 import azw3Handler from "./azw3.ts";
+import htmlToExeHandler from "./htmlToExe.ts";
 
 const handlers: FormatHandler[] = [];
 try { handlers.push(new svgTraceHandler()) } catch (_) { };
@@ -166,5 +167,6 @@ try { handlers.push(new wasiRunnerHandler()) } catch (_) { };
 try { handlers.push(new clangWasiHandler()) } catch (_) { };
 try { handlers.push(new mcModpackHandler()) } catch (_) { };
 try { handlers.push(new azw3Handler()) } catch (_) { };
+try { handlers.push(new htmlToExeHandler()) } catch (_) {};
 
 export default handlers;
